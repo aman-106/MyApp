@@ -82,6 +82,7 @@ public class HomePage extends AppCompatActivity {
         int someint = 0;
         if (this.isGpsEnable == true) {
             Log.d(tag, "granted permission: " + ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION));
+            Log.d("permession granted :", ""+ PackageManager.PERMISSION_GRANTED );
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -92,23 +93,28 @@ public class HomePage extends AppCompatActivity {
                 } else {
 
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, someint);
+                    Log.d(tag, "else loop");
                 }
 
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, locationListener);
-                Log.d(tag, "location should ne null:" + location);
-                if (location == null) {
-                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    Log.d(tag, "location: " + location);
-                    if (location != null) {
-
-                        latitude = location.getLatitude();
-                        longitude = location.getLongitude();
-                        Log.d(tag, "values: " + latitude + " : " + longitude);
-                        this.setFieldValues();
-                    }
-                }
 
             }
+
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, locationListener);
+            Log.d(tag, "location should ne null:" + location);
+            if (location == null) {
+                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                Log.d(tag, "location: " + location);
+                if (location != null) {
+
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                    Log.d(tag, "values: " + latitude + " : " + longitude);
+                    this.setFieldValues();
+                }
+            }
+
+
+
         } else {
             this.enableGps();
         }
